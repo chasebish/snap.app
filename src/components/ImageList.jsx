@@ -43,9 +43,12 @@ class ImageListComponent extends React.Component {
         for (let image of images) {
             const imgObj = (
                 <div key={image.id} className='m-2 card'>
-                    <img alt={image.description} src={image.urls.thumb}></img>
+                    <a href={image.links.download} download={image.id}>
+                        <img alt={image.description} src={image.urls.thumb}></img>
+                    </a>
                     <div className='card-body'>
-                        <a style={{display: 'table-cell'}} href={`https://unsplash.com/@${image.user.username}`}>
+                        {/* eslint-disable-next-line */}
+                        <a style={{display: 'table-cell'}} href={`https://unsplash.com/@${image.user.username}`} target="_blank">
                             <h5>{image.user.username}</h5>
                         </a>
                     </div>

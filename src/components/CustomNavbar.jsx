@@ -1,3 +1,5 @@
+/* global alert */
+
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -42,14 +44,28 @@ class NavbarComponent extends React.Component {
 
     resetImages = () => {
         this.ImageService.getRandomImages()
-            .then(images => this.props.setImages(images))
+            .then(images => {
+                if (images.error === true) {
+                    alert('Error retrieving images.  Rate limit likely hit.')
+                }
+                else {
+                    this.props.setImages(images)
+                }
+            })
+            .catch(() => console.error('rate limit'))
     }
 
     search = query => {
         this.ImageService.getSearchImages(query)
             .then(images => {
-                this.props.setImages(images.results)
+                if (images.error === true) {
+                    alert('Error retrieving images.  Rate limit likely hit.')
+                }
+                else {
+                    this.props.setImages(images.results)
+                }
             })
+            .catch(() => console.error('rate limit'))
     }
 
 }
