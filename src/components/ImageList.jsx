@@ -1,3 +1,5 @@
+/* global alert */
+
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
@@ -14,13 +16,21 @@ class ImageListComponent extends React.Component {
 
     componentDidMount() {
         this.ImageService.getRandomImages()
-            .then(response => this.props.setImages(response))
+            .then(images => {
+                if (images.error === true) {
+                    alert('Error retrieving images.  Rate limit likely hit.')
+                }
+                else {
+                    this.props.setImages(images)
+                }
+            })
+            .catch(() => console.error('rate limit'))
     }
 
     render() {
         return (
             <div>
-                <h4>Images</h4>
+                <h4 className='mt-2'>Images</h4>
                 <div className='row'>
                     {this.renderImages(this.props.images)}
                 </div>
