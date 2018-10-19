@@ -1,8 +1,13 @@
 import React from 'react'
 
+import { CustomNavbar, ImageList } from '.'
+
 const RootComponent = () => (
     <div>
-        Hello Root Component
+        <CustomNavbar/>
+        <div className='container'>
+            <ImageList/>
+        </div>
     </div>
 )
 
